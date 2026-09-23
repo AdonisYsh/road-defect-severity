@@ -1,0 +1,8 @@
+ultralytics==8.4.160
+torchmetrics[detection]
+pycocotools
+krippendorff
+lap
+imageio[ffmpeg]
+onnx
+onnxslim

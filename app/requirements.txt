@@ -1,0 +1,7 @@
+ultralytics==8.4.160
+opencv-python-headless
+imageio[ffmpeg]
+lap
+pyyaml
+pandas
+scipy

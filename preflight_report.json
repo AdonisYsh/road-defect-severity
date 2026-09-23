@@ -1,0 +1,292 @@
+{
+  "env": "local",
+  "root": "/home/aestheteyc/Projects/road-defect",
+  "started": "2026-09-23 18:52:55",
+  "checks": {
+    "env": {
+      "status": "ok",
+      "msg": "environment = local, project root = /home/aestheteyc/Projects/road-defect"
+    },
+    "python": {
+      "status": "ok",
+      "msg": "Python 3.12.14 on Linux-6.12.105-x86_64-with-glibc2.42",
+      "version": "3.12.14"
+    },
+    "disk": {
+      "status": "ok",
+      "msg": "394.7 GB free",
+      "free_gb": 394.7
+    },
+    "internet": {
+      "status": "ok",
+      "msg": "internet reachable"
+    },
+    "packages": {
+      "status": "ok",
+      "msg": "all packages import",
+      "versions": {
+        "torch": "2.14.0+cu130",
+        "torchvision": "0.29.0+cu130",
+        "ultralytics": "8.4.160",
+        "torchmetrics": "1.9.0",
+        "gradio": "6.28.0",
+        "huggingface_hub": "1.32.0",
+        "scipy": "1.18.1",
+        "sklearn": "1.9.1",
+        "pandas": "3.0.6",
+        "numpy": "2.5.3",
+        "opencv": "5.0.0"
+      }
+    },
+    "cuda": {
+      "status": "ok",
+      "msg": "1 GPU(s): NVIDIA GeForce RTX 4060 Laptop GPU (8.2 GB)",
+      "gpus": [
+        {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "vram_gb": 8.2,
+          "capability": "8.9"
+        }
+      ],
+      "torch_cuda": "13.0",
+      "cudnn": 92400
+    },
+    "gpu_math": {
+      "status": "ok",
+      "msg": "GPU matmul fp32 ~5.6 TFLOPS, fp16 autocast OK",
+      "tflops_fp32": 5.6
+    },
+    "yolo_predict": {
+      "status": "ok",
+      "msg": "YOLOv8s detects 5 objects; ~132 img/s end-to-end",
+      "fps_yolov8s": 132.3
+    },
+    "yolo_train": {
+      "status": "ok",
+      "msg": "1-epoch training on coco8 works (checkpoint saved)"
+    },
+    "yolo_val": {
+      "status": "ok",
+      "msg": "val metrics OK (mAP50=0.617), confusion matrix + curves saved",
+      "save_dir": "/home/aestheteyc/Projects/road-defect/runs_smoke/coco8_val"
+    },
+    "sam": {
+      "status": "ok",
+      "msg": "SAM 2 mask OK: mask area 262086 px vs box area 412121 px"
+    },
+    "frcnn_predict": {
+      "status": "ok",
+      "msg": "COCO Faster R-CNN detects 6 objects"
+    },
+    "frcnn_train": {
+      "status": "ok",
+      "msg": "training step OK (loss 1.697, 4 classes + background)"
+    },
+    "torchmetrics": {
+      "status": "ok",
+      "msg": "torchmetrics mAP (pycocotools backend) OK"
+    },
+    "stats": {
+      "status": "ok",
+      "msg": "spearman=0.94 kendall=0.89 krippendorff alpha=0.92 (dummy data)"
+    },
+    "gradio": {
+      "status": "ok",
+      "msg": "gradio 6.28.0 imports"
+    },
+    "hf": {
+      "status": "warn",
+      "msg": "HF_TOKEN not set: fine for now, needed only for the upload step (laptop: export HF_TOKEN=...; Kaggle: Add-ons > Secrets; Colab: key icon > Secrets)"
+    },
+    "dataset_India": {
+      "status": "ok",
+      "msg": "India: counts match the RDD2022 paper (within 2%)",
+      "train_images": 7706,
+      "train_xmls": 7706,
+      "test_images_unlabelled": 1959,
+      "images_without_xml": 0,
+      "xml_without_image": 0,
+      "class_counts": {
+        "D40": 3187,
+        "D20": 2021,
+        "D00": 1555,
+        "D44": 1062,
+        "D01": 179,
+        "D10": 68,
+        "D43": 57,
+        "D11": 45,
+        "D50": 28,
+        "D0w0": 1
+      },
+      "non_target_labels": {
+        "D44": 1062,
+        "D01": 179,
+        "D11": 45,
+        "D50": 28,
+        "D43": 57,
+        "D0w0": 1
+      },
+      "images_with_no_damage": 3921,
+      "images_with_only_non_target": 562,
+      "bad_xml": 0,
+      "invalid_boxes": 0,
+      "image_sizes": {
+        "720x720": 7706
+      },
+      "example_dirs": [
+        "India/train/annotations/xmls",
+        "India/train/images"
+      ]
+    },
+    "dataset_Japan": {
+      "status": "warn",
+      "msg": "Japan: differs from paper/clean state: 0 imgs w/o xml, 0 xml w/o img, 0 bad xml, 1 invalid boxes (prep script will drop these)",
+      "train_images": 10506,
+      "train_xmls": 10506,
+      "test_images_unlabelled": 2627,
+      "images_without_xml": 0,
+      "xml_without_image": 0,
+      "class_counts": {
+        "D20": 6199,
+        "D00": 4049,
+        "D44": 3995,
+        "D10": 3979,
+        "D50": 3553,
+        "D40": 2243,
+        "D43": 736
+      },
+      "non_target_labels": {
+        "D44": 3995,
+        "D43": 736,
+        "D50": 3553
+      },
+      "images_with_no_damage": 794,
+      "images_with_only_non_target": 1812,
+      "bad_xml": 0,
+      "invalid_boxes": 1,
+      "image_sizes": {
+        "600x600": 10187,
+        "1024x1024": 147,
+        "540x540": 124,
+        "1080x1080": 48
+      },
+      "example_dirs": [
+        "Japan/train/annotations/xmls",
+        "Japan/train/images"
+      ]
+    },
+    "dataset_total": {
+      "status": "ok",
+      "msg": "[official] India + Japan: 18212 labelled images; D00=5604, D10=4047, D20=8220, D40=5430"
+    }
+  },
+  "warnings": [
+    "HF_TOKEN not set: fine for now, needed only for the upload step (laptop: export HF_TOKEN=...; Kaggle: Add-ons > Secrets; Colab: key icon > Secrets)",
+    "Japan: differs from paper/clean state: 0 imgs w/o xml, 0 xml w/o img, 0 bad xml, 1 invalid boxes (prep script will drop these)"
+  ],
+  "versions": {
+    "torch": "2.14.0+cu130",
+    "torchvision": "0.29.0+cu130",
+    "ultralytics": "8.4.160",
+    "torchmetrics": "1.9.0",
+    "gradio": "6.28.0",
+    "huggingface_hub": "1.32.0",
+    "scipy": "1.18.1",
+    "sklearn": "1.9.1",
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "opencv": "5.0.0"
+  },
+  "driver": "595.71.05",
+  "official_zip_top_entries": [
+    "RDD2022"
+  ],
+  "official_zip_second_level": [
+    "RDD2022/China_Drone.zip",
+    "RDD2022/China_MotorBike.zip",
+    "RDD2022/Czech.zip",
+    "RDD2022/India.zip",
+    "RDD2022/Japan.zip",
+    "RDD2022/Norway.zip",
+    "RDD2022/United_States.zip"
+  ],
+  "official_partial_download_gb": 1.6,
+  "dataset_source": "figshare RDD2022 (https://ndownloader.figshare.com/files/38030910)",
+  "dataset": {
+    "India": {
+      "train_images": 7706,
+      "train_xmls": 7706,
+      "test_images_unlabelled": 1959,
+      "images_without_xml": 0,
+      "xml_without_image": 0,
+      "class_counts": {
+        "D40": 3187,
+        "D20": 2021,
+        "D00": 1555,
+        "D44": 1062,
+        "D01": 179,
+        "D10": 68,
+        "D43": 57,
+        "D11": 45,
+        "D50": 28,
+        "D0w0": 1
+      },
+      "non_target_labels": {
+        "D44": 1062,
+        "D01": 179,
+        "D11": 45,
+        "D50": 28,
+        "D43": 57,
+        "D0w0": 1
+      },
+      "images_with_no_damage": 3921,
+      "images_with_only_non_target": 562,
+      "bad_xml": 0,
+      "invalid_boxes": 0,
+      "image_sizes": {
+        "720x720": 7706
+      },
+      "example_dirs": [
+        "India/train/annotations/xmls",
+        "India/train/images"
+      ]
+    },
+    "Japan": {
+      "train_images": 10506,
+      "train_xmls": 10506,
+      "test_images_unlabelled": 2627,
+      "images_without_xml": 0,
+      "xml_without_image": 0,
+      "class_counts": {
+        "D20": 6199,
+        "D00": 4049,
+        "D44": 3995,
+        "D10": 3979,
+        "D50": 3553,
+        "D40": 2243,
+        "D43": 736
+      },
+      "non_target_labels": {
+        "D44": 3995,
+        "D43": 736,
+        "D50": 3553
+      },
+      "images_with_no_damage": 794,
+      "images_with_only_non_target": 1812,
+      "bad_xml": 0,
+      "invalid_boxes": 1,
+      "image_sizes": {
+        "600x600": 10187,
+        "1024x1024": 147,
+        "540x540": 124,
+        "1080x1080": 48
+      },
+      "example_dirs": [
+        "Japan/train/annotations/xmls",
+        "Japan/train/images"
+      ]
+    }
+  },
+  "result": "PASS",
+  "finished": "2026-09-23 22:45:19"
+}

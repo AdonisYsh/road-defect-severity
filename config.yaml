@@ -1,0 +1,114 @@
+# road-defect — one config for every script, every machine.
+# Paths are relative to the project root unless absolute.
+
+project:
+  name: road-defect-severity
+  seed: 42
+
+roots:
+  local: ~/Projects/road-defect
+  kaggle: /kaggle/working/road-defect
+  colab: /content/road-defect
+
+paths:
+  raw: data/raw
+  yolo: data/yolo
+  coco: data/coco
+  weights: weights
+  runs: runs
+  results: results
+  colab_drive: /content/drive/MyDrive/road-defect
+
+dataset:
+  url: https://ndownloader.figshare.com/files/38030910
+  zip_size: 13264172619
+  countries: [India, Japan]
+  classes: [D00, D10, D20, D40]
+  class_names: [longitudinal_crack, transverse_crack, alligator_crack, pothole]
+  split: [0.70, 0.15, 0.15]
+  background_fraction_train: 0.12
+  oversample:
+    threshold: 0.05
+    max_repeat: 3
+  min_box_px: 2
+
+yolo:
+  imgsz: 640
+  workers: 8
+  patience: 15
+  cos_lr: true
+  close_mosaic: 10
+  cache: false
+  optimizer: auto
+  augment:
+    mosaic: 1.0
+    mixup: 0.05
+    degrees: 0.0
+    translate: 0.1
+    scale: 0.5
+    fliplr: 0.5
+    hsv_h: 0.015
+    hsv_s: 0.7
+    hsv_v: 0.4
+
+frcnn:
+  arch: v2
+  min_size: 640
+  max_size: 1024
+  batch_per_gpu: 4
+  lr_per_16: 0.02
+  epochs: 12
+  time_hours: 7.0
+  workers: 4
+
+jobs:
+  yolov8s_main:  {kind: yolo, model: yolov8s.pt, data: all,   seed: 42, epochs: 100, time_hours: 4.0, batch: 16}
+  yolov8n_seed0: {kind: yolo, model: yolov8n.pt, data: all,   seed: 0,  epochs: 80,  time_hours: 1.3, batch: 32}
+  yolov8n_seed1: {kind: yolo, model: yolov8n.pt, data: all,   seed: 1,  epochs: 80,  time_hours: 1.3, batch: 32}
+  yolov8n_seed2: {kind: yolo, model: yolov8n.pt, data: all,   seed: 2,  epochs: 80,  time_hours: 1.3, batch: 32}
+  xc_india:      {kind: yolo, model: yolov8n.pt, data: India, seed: 0,  epochs: 80,  time_hours: 1.0, batch: 32}
+  xc_japan:      {kind: yolo, model: yolov8n.pt, data: Japan, seed: 0,  epochs: 80,  time_hours: 1.0, batch: 32}
+  frcnn:         {kind: frcnn}
+
+eval:
+  match_iou: 0.5
+  cm_conf: 0.25
+  tta: false
+  failures_per_type: 24
+
+benchmark:
+  imgsz: 640
+  gpu_images: 200
+  cpu_images: 20
+
+severity:
+  detector_job: yolov8s_main
+  sam_weights: sam2.1_b.pt
+  unsquash: {India: 1.3333333, Japan: 1.0}
+  horizon_override: {India: null, Japan: null}
+  horizon_classes: [D40, D10]
+  min_depth_frac: 0.05
+  lanes:
+    edge: 0.15
+    wheel_inner: 0.40
+    weights: {edge: 0.8, wheel: 1.2, centre: 1.0}
+  class_weights_init: {D00: 0.3, D10: 0.4, D20: 0.7, D40: 1.0}
+  weight_grid: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  cv_folds: 5
+  bootstrap: 1000
+
+rating:
+  n_crops: 150
+  raters: [A, B, C]
+  context_pad: 0.25
+
+video:
+  segment_seconds: 12
+  speed_kmh: 30
+  vid_stride: 2
+  tracker: bytetrack.yaml
+
+hf:
+  model_repo: road-defect-yolov8
+  space_repo: road-defect-demo
+  license: agpl-3.0
