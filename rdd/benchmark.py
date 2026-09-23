@@ -91,6 +91,9 @@ def main():
                      size_MB=Path(w).stat().st_size / 1e6, images=len(paths))
             log(f"{job} on {r['device']}: {r['fps']:.1f} img/s, {r['params_M']:.1f} M params, {r['GFLOPs']:.1f} GFLOPs")
             rows.append(r)
+    if not rows:
+        log("no trained models here yet; nothing to benchmark")
+        return
     slug = re.sub(r"[^A-Za-z0-9]+", "_", gpu_name()).strip("_")
     out = results("benchmark") / f"benchmark_{detect_env()}_{slug}.csv"
     pd.DataFrame(rows)[["job", "env", "device", "fps", "params_M", "GFLOPs", "size_MB", "images"]].to_csv(out, index=False)

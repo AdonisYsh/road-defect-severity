@@ -81,7 +81,8 @@ def quick_val_map50(model, dev, limit=800):
 
     ds = CocoDet("val", train=False, limit=limit)
     dl = DataLoader(ds, batch_size=4, num_workers=2, collate_fn=collate)
-    metric = MeanAveragePrecision(iou_thresholds=[0.5])
+    metric = MeanAveragePrecision(iou_thresholds=[0.5], sync_on_compute=False)  # rank 0 only: never sync across GPUs
+    metric.warn_on_many_detections = False
     model.eval()
     for imgs, tg, _ in dl:
         with torch.autocast("cuda", enabled=dev.type == "cuda"):
