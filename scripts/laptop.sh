@@ -14,6 +14,7 @@ STAGE="${1:-}"
 CURRENT="start"
 trap 'echo; echo "FAIL: stopped at step: $CURRENT  (send Claude the last ~30 lines)"' ERR
 cd "$ROOT"
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 say() { CURRENT="$1"; echo; echo "==> $1"; }
 

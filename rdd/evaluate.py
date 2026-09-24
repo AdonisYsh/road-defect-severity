@@ -44,14 +44,15 @@ def image_paths(split: str, scope: str = "all") -> list[str]:
     return [l for l in f.read_text().split() if l]
 
 
-def predict_yolo(weights, paths, tta=False, batch=16) -> dict[str, np.ndarray]:
+def predict_yolo(weights, paths, tta=False, batch=4) -> dict[str, np.ndarray]:
     from ultralytics import YOLO
 
     model = YOLO(str(weights))
     out = {}
     for i in range(0, len(paths), 256):
         for r in model.predict(paths[i:i + 256], conf=0.001, iou=0.6, max_det=300, imgsz=cfg()["yolo"]["imgsz"],
-                               augment=tta, device=device_str(), batch=batch, stream=True, verbose=False):
+                               augment=tta, device=device_str(), batch=batch, half=device_str() != "cpu",
+                               stream=True, verbose=False):
             b = r.boxes
             arr = np.concatenate([b.xyxy.cpu().numpy(), b.conf.cpu().numpy()[:, None], b.cls.cpu().numpy()[:, None]], 1) \
                 if len(b) else np.zeros((0, 6))
@@ -297,7 +298,7 @@ def ultralytics_val(job: str, out: Path):
     for scope in ["all"] + cfg()["dataset"]["countries"]:
         y = path("yolo") / "sets" / f"test_{scope}.yaml"
         m = YOLO(str(job_weights(job)))
-        r = m.val(data=str(y), split="test", imgsz=cfg()["yolo"]["imgsz"], batch=16, device=device_str(),
+        r = m.val(data=str(y), split="test", imgsz=cfg()["yolo"]["imgsz"], batch=8, device=device_str(),
                   project=str(runs_dir() / "val"), name=f"{job}_{scope}", exist_ok=True, plots=True, verbose=False)
         row = dict(job=job, test=scope, map50=float(r.box.map50), map50_95=float(r.box.map),
                    precision=float(r.box.mp), recall=float(r.box.mr),
