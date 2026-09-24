@@ -62,7 +62,7 @@ frcnn:
   workers: 4
 
 jobs:
-  yolov8s_main:  {kind: yolo, model: yolov8s.pt, data: all,   seed: 42, epochs: 100, time_hours: 4.0, batch: 16}
+  yolov8s_main:  {kind: yolo, model: yolov8s.pt, data: all,   seed: 42, epochs: 100, time_hours: 4.0, batch: 8}
   yolov8n_seed0: {kind: yolo, model: yolov8n.pt, data: all,   seed: 0,  epochs: 80,  time_hours: 1.3, batch: 32}
   yolov8n_seed1: {kind: yolo, model: yolov8n.pt, data: all,   seed: 1,  epochs: 80,  time_hours: 1.3, batch: 32}
   yolov8n_seed2: {kind: yolo, model: yolov8n.pt, data: all,   seed: 2,  epochs: 80,  time_hours: 1.3, batch: 32}
